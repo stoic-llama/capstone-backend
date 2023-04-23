@@ -1,8 +1,6 @@
 require('dotenv').config()
 
 const express = require('express')
-const session = require('express-session')
-const MongoDbSession = require('connect-mongodb-session')(session) // pass in session variable
 const app = express()
 const mongoose = require('mongoose')
 
@@ -15,32 +13,6 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true})
 const db = mongoose.connection 
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to database'))
-
-
-/////////////////
-//   Session   //
-/////////////////
-
-const sessionStore = new MongoDbSession({
-    uri: process.env.DATABASE_URL,
-    collection: 'sessions',
-}) 
-
-// create req.session object
-// req.session object will have state that is persistent in all req <> res cycles
-app.use(session({
-    secret: 'key that will sign cookie',
-    resave: false, // for every request to server, create new session regardless same browser or user
-    saveUninitialized: false, // if not touched or modified session, don't save session
-    store: sessionStore,
-}))
-
-app.get("/", (req, res) => {
-    req.session.isAuth = true
-    console.log(req.session.id)
-    res.send("Hello Session")
-})
-
 
 
 ////////////////
@@ -75,7 +47,7 @@ app.use('/users', usersRouter)
 /////////////////
 //   Startup   //
 /////////////////
-const port = process.env.PORT || 4101
+const port = process.env.PORT || 9999
 
 // start server at port 4100
 app.listen(port, () => console.log(`Server started at ${port}`))
