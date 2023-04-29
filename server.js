@@ -14,6 +14,9 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to database'))
 
+app.get("/", (req, res) => {
+    res.send("API is alive!")
+})
 
 ////////////////
 //   Routes   //
@@ -40,8 +43,8 @@ const storesRouter = require('./routes/stores')
 app.use('/stores', storesRouter)
 
 // setup users endpoint/route
-const usersRouter = require('./routes/users')
-app.use('/users', usersRouter)
+// const usersRouter = require('./routes/users')
+// app.use('/users', usersRouter)
 
 
 /////////////////
