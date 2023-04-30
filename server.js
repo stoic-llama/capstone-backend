@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 // Refer https://stackoverflow.com/questions/46288437/set-cookies-for-cross-origin-requests
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Origin", process.env.CORS_FRONTEND_URL);
+  res.header("Access-Control-Allow-Origin", "*"); // process.env.CORS_FRONTEND_URL);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
@@ -41,6 +41,10 @@ app.use('/product_ratings', product_ratingsRouter)
 // setup stores endpoint/route
 const storesRouter = require('./routes/stores')
 app.use('/stores', storesRouter)
+
+// setup availability endpoint/route
+const availabilityRouter = require('./routes/availability')
+app.use('/availability', availabilityRouter)
 
 // setup users endpoint/route
 // const usersRouter = require('./routes/users')

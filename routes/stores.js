@@ -44,9 +44,9 @@ router.get('/:id', getStore, (req, res) => {
 
 // })
 
-// Updating one
-// using patch and not put, because put updates all columns
-// while patch only updates the one column that has changed
+// // Updating one
+// // using patch and not put, because put updates all columns
+// // while patch only updates the one column that has changed
 // router.patch('/:id', getStore, async (req, res) => {
 //     /*
 //         "Company": req.body.Company,
@@ -118,7 +118,11 @@ router.get('/:id', getStore, (req, res) => {
 //     }
 // })
 
-// router middleware to get store by id
+
+/****************************************/      
+/* Router middleware to get store by id */
+/****************************************/
+
 async function getStore(req, res, next) {
     let store 
     try {
