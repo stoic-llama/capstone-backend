@@ -46,6 +46,10 @@ app.use('/stores', storesRouter)
 const availabilityRouter = require('./routes/availability')
 app.use('/availability', availabilityRouter)
 
+// setup healthcheck for entire application
+const healthcheckRouter = require('./routes/healthcheck')
+app.use('/healthcheck', healthcheckRouter);
+
 // setup users endpoint/route
 // const usersRouter = require('./routes/users')
 // app.use('/users', usersRouter)
