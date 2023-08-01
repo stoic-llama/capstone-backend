@@ -48,21 +48,44 @@ router.post('/:id', getStore, async (req, res) => {
                         email: req.body.email
                     })
 
-                    item.Likes.forEach( u => console.log("here's before Likes: " + u.email))
-                    item.Likes.push(user)
+                    item.Likes.forEach( u => console.log("here's before Likes: \n" + u.email))
 
-                    // let query = {}
-                    // let document = {$push: user}
-                    // res.store.updateOne(
-                    //     {"_id" : ObjectId(req.params.id)}, 
-                    //     {$set: {
-                    //         'Store_items.$[Store_items].Likes
-                    //     }}
-                    // )
+                    ////
+                    
+                    if(user) {
+                        Store.updateOne({
+                                $and: [
+                                    {"_id": req.params.id},
+                                    {"Store_items._id": req.body.product_id}
+                                ]
+                            },
+                            {
+                                $push: {
+                                    "Store_items.$.Likes": {
+                                        "_id": {
+                                            "$oid": "6449ae78513d0ec366861952"
+                                          },
+                                          "email": "margot.robbie@n.com",
+                                          "firstName": "Margot",
+                                          "lastName": "Robbie",
+                                          "isActive": true,
+                                          "token": "Wc0MK0EctHPSYYSmGMhePh6FS7s9ZxttcpFuH.ZLqrR2aQwrvTB8z5.NexT6WGEm",
+                                          "createdAt": {
+                                            "$date": "2023-04-26T23:06:32.718Z"
+                                          },
+                                          "lastLoginAt": {
+                                            "$date": "2023-04-26T23:51:01.487Z"
+                                          }
+                                    }
+                                }
+                            }
+                        )
+                    }
 
-                    console.log("typeof: " + typeof(item.Likes[0]))
-                    item.Likes.forEach( u => console.log("here's after Likes: " + u.email))
+                    item.Likes.forEach( u => console.log("here's after Likes: \n" + u.email))
 
+                    ////
+                    
                     item.Total_likes = item.Total_likes + 1
                 }
     

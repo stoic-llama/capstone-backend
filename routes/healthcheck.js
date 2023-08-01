@@ -7,6 +7,7 @@ const router = express.Router()
 
 router.get('/', async (_req, res, _next) => {
     const healthcheck = {
+        name: 'capstone-backend',
         message: 'OK',
         uptime: Math.floor(process.uptime()) + " seconds",
         timestamp: new Date(Date.now()).toString() 
@@ -15,6 +16,7 @@ router.get('/', async (_req, res, _next) => {
         res.status(200).json(healthcheck);
     } catch (error) {
         res.status(500).json({
+            name: 'capstone-backend',
             message: error.message,
             uptime: Math.floor(process.uptime()) + " seconds",
             timestamp: new Date(Date.now()).toString() 
