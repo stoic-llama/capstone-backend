@@ -47,7 +47,7 @@ pipeline {
                     sh 'ssh -i /var/jenkins_home/.ssh/website_deploy_rsa_key ${WEBSITE} "docker stop capstone-backend"'
 
                     sh '''
-                        ssh -i /var/jenkins_home/.ssh/website_deploy_rsa_key ${MONGODB} "docker run -d \
+                        ssh -i /var/jenkins_home/.ssh/website_deploy_rsa_key ${WEBSITE} "docker run -d \
                         -p 5000:5000 \
                         -e DATABASE_URL=${MONGODB} \
                         --rm \
