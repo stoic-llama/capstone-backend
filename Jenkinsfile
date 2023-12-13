@@ -61,7 +61,6 @@ pipeline {
                         ssh -i /var/jenkins_home/.ssh/website_deploy_rsa_key ${WEBSITE} "docker run -d \
                         -p 5000:5000 \
                         -e DATABASE_URL=${MONGODB} \
-                        --rm \
                         --name capstone-backend \
                         --network helpmybabies \
                         registry.digitalocean.com/capstone-ccsu/capstone-backend:${version}
