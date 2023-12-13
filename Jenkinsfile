@@ -1,7 +1,11 @@
+def getCommitSha() {
+    return sh(returnStdout: true, script: "git rev-parse HEAD | tr -d '\n'")
+}
+
 pipeline {
     agent any
     environment {
-        version = '1.1'
+        version = getCommitSha() // '1.1'
         containerName = 'capstone-backend'
     }
 
