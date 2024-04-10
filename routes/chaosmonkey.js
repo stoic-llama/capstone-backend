@@ -5,7 +5,9 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/', async (req, res, _next) => {
+router.post('/', async (req, res, _next) => {
+    console.log("req.body.activate = " + req.body.activate)
+
     if(req.body.activate == false) { // for testing purposes
         try {
             res.status(200).json({
