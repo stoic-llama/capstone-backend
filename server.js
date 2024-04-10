@@ -50,6 +50,10 @@ app.use('/availability', availabilityRouter)
 const healthcheckRouter = require('./routes/healthcheck')
 app.use('/healthcheck', healthcheckRouter);
 
+// setup healthcheck for entire application
+const chaosMonkeyRouter = require('./routes/chaosmonkey')
+app.use('/chaosmonkey', chaosMonkeyRouter);
+
 // setup users endpoint/route
 // const usersRouter = require('./routes/users')
 // app.use('/users', usersRouter)
@@ -62,6 +66,3 @@ const port = process.env.PORT || 9999
 
 // start server at port 4100
 app.listen(port, () => console.log(`Server started at ${port}`))
-
-// Introduce an error to exit unexpectedly for the demo
-// throw new Error('Unexpected error occurred.');
