@@ -50,10 +50,6 @@ app.use('/availability', availabilityRouter)
 const healthcheckRouter = require('./routes/healthcheck')
 app.use('/healthcheck', healthcheckRouter);
 
-// setup healthcheck for entire application
-const chaosMonkeyRouter = require('./routes/chaosmonkey')
-app.use('/chaosmonkey', chaosMonkeyRouter);
-
 // setup users endpoint/route
 // const usersRouter = require('./routes/users')
 // app.use('/users', usersRouter)
