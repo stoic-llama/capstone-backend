@@ -47,15 +47,17 @@ pipeline {
                     string(credentialsId: 'website', variable: 'WEBSITE'),
                 ]) {
                     script {
-                        // Use SSH to check if the container exists and catch error when not exist 
-                        // so Jenkins can continue
-                        def containerStopped = sh(script: 'ssh -i /var/jenkins_home/.ssh/website_deploy_rsa_key "${WEBSITE}" docker stop ${containerName}', returnStatus: true)
+                        // Use SSH to check if the container exists 
+                            // --> If yes, stop and remove it
+                            // --> If no, display result true for both stop and rm command, no harm done 
+                        // Then let Jenkins continue
+                        def containerStopped = sh(script: 'ssh -i /var/jenkins_home/.ssh/website_deploy_rsa_key "${WEBSITE}" docker stop ${containerName}', returnStatus: true) == 0
 
-                        echo "docker stop result: $containerStopped"
+                        echo "docker stop command was finished successfully: $containerStopped"
 
-                        def containerRemoved = sh(script: 'ssh -i /var/jenkins_home/.ssh/website_deploy_rsa_key "${WEBSITE}" docker rm ${containerName}', returnStatus: true)
+                        def containerRemoved = sh(script: 'ssh -i /var/jenkins_home/.ssh/website_deploy_rsa_key "${WEBSITE}" docker rm ${containerName}', returnStatus: true) == 0
 
-                        echo "docker rm result: $containerRemoved"
+                        echo "docker rm command was finished successfully: $containerRemoved"
                     }
                 }
 

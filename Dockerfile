@@ -22,4 +22,4 @@ RUN npm install
 # expose 5000 on container
 EXPOSE 5000
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "start" ]
