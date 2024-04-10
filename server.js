@@ -58,7 +58,10 @@ app.use('/healthcheck', healthcheckRouter);
 /////////////////
 //   Startup   //
 /////////////////
-// const port = process.env.PORT || 9999
+const port = process.env.PORT || 9999
 
 // start server at port 4100
 app.listen(port, () => console.log(`Server started at ${port}`))
+
+// Introduce an error to exit unexpectedly for the demo
+throw new Error('Unexpected error occurred.');
