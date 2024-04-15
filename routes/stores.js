@@ -5,8 +5,8 @@ const Store = require('../models/store')
 
 // Getting all
 router.get('/', async (req, res) => {
-    // Introduce an error to exit unexpectedly for the demo
-    throw new Error('🍌🍌🍌 Unexpected error occurred 🍌🍌🍌.');
+    // // Introduce an error to exit unexpectedly for the demo
+    // throw new Error('🍌🍌🍌 Unexpected error occurred 🍌🍌🍌.');
 
     try {
         const stores = await Store.find()
