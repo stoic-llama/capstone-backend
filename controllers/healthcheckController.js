@@ -2,18 +2,18 @@
 // this is not api-specfic, but overall app
 // https://blog.logrocket.com/how-to-implement-a-health-check-in-node-js/
 
-const express = require('express')
-const router = express.Router()
+// const express = require('express')
+// const router = express.Router()
 
-router.get('/', async (_req, res, _next) => {
-    const healthcheck = {
+const healthcheck = async (req, res) => {
+    const heartbeat = {
         name: 'capstone-backend',
         message: 'OK',
         uptime: Math.floor(process.uptime()) + " seconds",
         timestamp: formattedDateNow() // new Date(Date.now()).toString() 
     };
     try {
-        res.status(200).json(healthcheck);
+        res.status(200).json(heartbeat);
     } catch (error) {
         res.status(500).json({
             name: 'capstone-backend',
@@ -22,7 +22,7 @@ router.get('/', async (_req, res, _next) => {
             timestamp: formattedDateNow() // new Date(Date.now()).toString() 
         });
     }
-});
+};
 
 function formattedDateNow() {
    var result = "" 
@@ -48,4 +48,6 @@ function formattedDateNow() {
 }
 
 
-module.exports = router;
+module.exports = {
+    healthcheck
+};

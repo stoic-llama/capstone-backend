@@ -10,6 +10,15 @@ pipeline {
     }
 
     stages {
+        // only allow dockerization if the initial build and unit tests in the build pass
+         
+        // stage("sonar quality gate") {
+        //     steps {
+
+        //     }
+        // }
+
+
         stage("login") {
             steps {
                 echo 'authenticating into Digital Ocean repository...'
@@ -35,7 +44,11 @@ pipeline {
 
         stage("test") {
             steps {
-                echo 'testing the application...'    
+                echo 'testing the application...'  
+
+
+
+
             }
         }
 

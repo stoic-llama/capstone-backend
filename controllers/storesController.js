@@ -1,10 +1,8 @@
-// setup for middleware for stores endpoint/route
-const express = require('express')
-const router = express.Router()
 const Store = require('../models/store')
 
+
 // Getting all
-router.get('/', async (req, res) => {
+const storesWrapper = async (req, res) => {
     // // Introduce an error to exit unexpectedly for the demo
     // throw new Error('🍌🍌🍌 Unexpected error occurred 🍌🍌🍌.');
 
@@ -14,12 +12,12 @@ router.get('/', async (req, res) => {
     } catch(err) {
         res.status(500).json({message: err.message})
     }
-})
+}
 
 // Getting One
-router.get('/:id', getStore, (req, res) => {
-    res.json(res.store) // getStore already findById() from req.params.id
-})
+// router.get('/:id', getStore, (req, res) => {
+//     res.json(res.store) // getStore already findById() from req.params.id
+// })
 
 // Creating one
 // router.post('/', async (req, res) => {
@@ -126,21 +124,25 @@ router.get('/:id', getStore, (req, res) => {
 /* Router middleware to get store by id */
 /****************************************/
 
-async function getStore(req, res, next) {
-    let store 
-    try {
-        store = await Store.findById(req.params.id)
-        if (store === null) {
-            return res.status(404).json({message: 'Cannot find store'})
-        }
-    } catch(err) {
-        return res.status(500).json({ message: err.message })
-    }
+// async function getStore(req, res, next) {
+//     let store 
+//     try {
+//         store = await Store.findById(req.params.id)
+//         if (store === null) {
+//             return res.status(404).json({message: 'Cannot find store'})
+//         }
+//     } catch(err) {
+//         return res.status(500).json({ message: err.message })
+//     }
 
-    res.store = store 
-    next()
-}
+//     res.store = store 
+//     next()
+// }
 
 
 
-module.exports = router 
+// module.exports = router 
+
+module.exports = {
+    storesWrapper
+};
