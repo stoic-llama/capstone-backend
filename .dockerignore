@@ -1,2 +1,6 @@
 node_modules/
 .env
+.VSCodeCounter
+Archive
+.VSCodeCounter
+coverage
