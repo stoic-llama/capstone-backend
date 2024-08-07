@@ -90,7 +90,7 @@ pipeline {
                     
                     git clone https://github.com/stoic-llama/capstone-backend.git
                     
-                    docker run --rm -v "/root/Projects/capstone-backend:/project aldanial/cloc \
+                    docker run --rm -v /root/Projects/capstone-backend:/project aldanial/cloc \
                     --by-file \
                     --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests \
                     --include-lang=JavaScript \
