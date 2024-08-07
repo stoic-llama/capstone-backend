@@ -95,11 +95,7 @@ pipeline {
 
                 sh '''
                     docker exec jenkins sh -c "
-                        docker run --rm -v ~/Projects/capstone-backend:/project aldanial/cloc \
-                        --by-file \
-                        --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests \
-                        --include-lang=JavaScript \
-                        /project
+                        docker run --rm -v /var/jenkins_home/Projects/:/project aldanial/cloc --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests --include-lang=JavaScript /project
                     "
                 '''
 
