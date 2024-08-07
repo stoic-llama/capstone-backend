@@ -87,9 +87,9 @@ pipeline {
                     echo "linting and testing..."
 
                     docker exec jenkins sh -c "
-                        git clone https://github.com/stoic-llama/capstone-backend.git ~/Projects/capstone/
+                        git clone https://github.com/stoic-llama/capstone-backend.git ~/Projects/
                         
-                        ls ~/Projects/capstone/
+                        ls ~/Projects/
                     "
                 '''
 
@@ -104,7 +104,7 @@ pipeline {
                 '''
 
                 sh '''
-                    docker exec jenkins sh -c "rm -r ~/Projects/capstone-backend"
+                    docker exec jenkins sh -c "rm -r ~/Projects/"
                 '''
 
                 // Code Review - Code Complexity
