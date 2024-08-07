@@ -81,84 +81,84 @@ pipeline {
 
         stage("test") {
             steps {
-                // Code Review - Code Complexity
-                // Source Lines of Code
-                sh '''
-                    echo "Linting and testing..."
+                script {
+                    // Code Review - Code Complexity
+                    // Source Lines of Code
+                    sh '''
+                        docker exec capstone-backend sh -c '
+                            #!/bin/bash
+                            
+                            # Check if curl is installed
+                            if ! command -v curl &> /dev/null
+                            then
+                                echo "curl is not installed. Installing..."
+                                apk update && apk install -y curl
+                            else
+                                echo "curl is already installed."
+                            fi
+                            
+                            # Check if Perl is installed
+                            if ! command -v perl &> /dev/null
+                            then
+                                echo "Perl is not installed. Installing..."
+                                apk update && apk install -y perl
+                            else
+                                echo "Perl is already installed."
+                            fi
+                        '
+                    '''
 
-                    echo "Checking if Perl is installed..."
+    
+                    sh '''
+                        docker exec capstone-backend sh -c "
+                            echo 'Initiating cloc from kent c dodds...'
 
-                    docker exec capstone-backend sh -c "
+                            npx cloc . --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests --include-lang=JavaScript
+                        "
+                    '''
+
+
+                    // Code Review - Code Complexity
+                    // McCabe's Cyclomatic Cycle
+                    sh '''
+                        docker exec capstone-backend sh -c "npm run eslint"
+                    '''                
+
+
+                    // Unit Tests
+                    sh '''
+                        docker exec capstone-backend sh -c "npm run test"
+                    '''
+
+                    // Integration Tests
+                    // TODO: Modify in test server to be Product API specific
+                    sh '''
                         #!/bin/bash
+
+                        echo "Initiate end to end testing..."
                         
-                        # Check if curl is installed
-                        if ! command -v curl &> /dev/null ;
-                        then
-                            echo "curl is not installed. Installing..."
-                            apk update && apk install -y curl ;
-                        else
-                            echo "curl is already installed." ;
+                        # Check if cURL command is available (required), abort if it does not exist
+                        if ! type curl >/dev/null 2>&1; then
+                            echo >&2 "Required curl but it's not installed. Aborting."
+                            exit 1
                         fi
                         
-                        # Check if Perl is installed
-                        if ! command -v perl &> /dev/null ;
-                        then
-                            echo "Perl is not installed. Installing..."
-                            apk update && apk install -y perl ;
+                        # Perform GET Request
+                        response=$(curl -s 'http://104.236.196.52:9000/api/v1/e2e')
+                        echo ${response}
+
+                        # Check if the response contains "Success"
+                        if [ $response = "Success" ]; then
+                            message="Success"
                         else
-                            echo "Perl is already installed." ;
+                            message="Failed"
                         fi
-                    "
-                '''
- 
-                sh '''
-                    docker exec capstone-backend sh -c "
-                        echo 'Initiating cloc from kent c dodds...'
 
-                        npx cloc . --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests --include-lang=JavaScript
-                    "
-                '''
+                        # Print Response in Jenkins Console
+                        echo "Test Result: $message" 
+                    '''
 
-
-                // Code Review - Code Complexity
-                // McCabe's Cyclomatic Cycle
-                sh '''
-                    docker exec capstone-backend sh -c "npm run eslint"
-                '''                
-
-
-                // Unit Tests
-                sh '''
-                    docker exec capstone-backend sh -c "npm run test"
-                '''
-
-                // Integration Tests
-                // TODO: Modify in test server to be Product API specific
-                sh '''
-                    #!/bin/bash
-
-                    echo "Initiate end to end testing..."
-                    
-                    # Check if cURL command is available (required), abort if it does not exist
-                    if ! type curl >/dev/null 2>&1; then
-                        echo >&2 "Required curl but it's not installed. Aborting."
-                        exit 1
-                    fi
-                    
-                    # Perform GET Request
-                    response=$(curl -s 'http://104.236.196.52:9000/api/v1/e2e')
-                    echo ${response}
-
-                    # Check if the response contains "Success"
-                    if [ $response = "Success" ]; then
-                        message="Success"
-                    else
-                        message="Failed"
-                    fi
-
-                    # Print Response in Jenkins Console
-                    echo "Test Result: $message" 
-                '''
+                }
             }
         }
 
