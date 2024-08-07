@@ -57,7 +57,7 @@ describe("/api/v1/healthcheck", () => {
       const res = await req
         .get("/api/v1/healthcheck");
       
-      // console.log("res from test: ", res.body);
+      console.log("res from test: ", res.body);
 
       expect(res.status).toBe(200);
       expect(res.headers["content-type"]).toMatch(/json/);
