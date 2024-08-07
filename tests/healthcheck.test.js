@@ -27,6 +27,7 @@
 //     expect(res.body).toHaveProperty("error");
 //   });
 // });
+require('dotenv').config()
 
 const supertest = require('supertest');
 const app = require('../app');
@@ -58,6 +59,12 @@ describe("/api/v1/healthcheck", () => {
         .get("/api/v1/healthcheck");
       
       console.log("res from test: ", res.text);
+      console.log("process.env.API_VERSION : " + process.env.API_VERSION);
+
+      const res2 = await req
+        .get("/api/v/healthcheck");
+
+      console.log("res2 with /api/v/healthcheck: ", res2.text);
 
       expect(res.status).toBe(200);
       expect(res.headers["content-type"]).toMatch(/json/);
