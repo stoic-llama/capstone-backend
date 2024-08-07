@@ -86,21 +86,15 @@ pipeline {
                 sh '''
                     echo "linting and testing..."
 
-                    docker exec jenkins sh -c "
-                        git clone https://github.com/stoic-llama/capstone-backend.git ~/Projects/
-                        
-                        ls ~/Projects/
-                    "
-                '''
+                    echo "checking if perl is installed..."
 
-                sh '''
-                    docker exec jenkins sh -c "
-                        docker run --rm -v /var/jenkins_home/Projects/:/project aldanial/cloc --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests --include-lang=JavaScript /project
-                    "
-                '''
+                    perl -v
 
-                sh '''
-                    docker exec jenkins sh -c "rm -r ~/Projects/"
+                    echo "initiating cloc from kent c dodds..."
+
+                    npx cloc . --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests --include-lang=JavaScript
+
+                    "
                 '''
 
                 // Code Review - Code Complexity
