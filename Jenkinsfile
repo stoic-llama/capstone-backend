@@ -92,21 +92,21 @@ pipeline {
                         #!/bin/bash
                         
                         # Check if curl is installed
-                        if ! command -v curl &> /dev/null
+                        if ! command -v curl &> /dev/null ;
                         then
                             echo "curl is not installed. Installing..."
-                            apk update && apk install -y curl
+                            apk update && apk install -y curl ;
                         else
-                            echo "curl is already installed."
+                            echo "curl is already installed." ;
                         fi
                         
                         # Check if Perl is installed
-                        if ! command -v perl &> /dev/null
+                        if ! command -v perl &> /dev/null ;
                         then
                             echo "Perl is not installed. Installing..."
-                            apk update && apk install -y perl
+                            apk update && apk install -y perl ;
                         else
-                            echo "Perl is already installed."
+                            echo "Perl is already installed." ;
                         fi
                     "
                 '''
