@@ -84,6 +84,10 @@ pipeline {
                 // Code Review - Code Complexity
                 // Source Lines of Code
                 sh '''
+                    #!/bin/bash
+                    
+                    echo "linting and testing..."
+
                     cd ~/Projects
                     
                     git clone https://github.com/stoic-llama/capstone-backend.git
