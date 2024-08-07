@@ -84,18 +84,19 @@ pipeline {
                 // Code Review - Code Complexity
                 // Source Lines of Code
                 sh '''
-                    echo "linting and testing..."
+                    echo "Linting and testing..."
 
-                    echo "checking if perl is installed..."
+                    echo "Checking if Perl is installed..."
 
                     docker exec jenkins sh -c "
                         perl -v
 
-                        echo "initiating cloc from kent c dodds..."
+                        echo 'Initiating cloc from kent c dodds...'
 
                         npx cloc . --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests --include-lang=JavaScript
                     "
                 '''
+
 
                 // Code Review - Code Complexity
                 // McCabe's Cyclomatic Cycle
