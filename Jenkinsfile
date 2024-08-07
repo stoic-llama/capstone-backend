@@ -84,23 +84,20 @@ pipeline {
                 // Code Review - Code Complexity
                 // Source Lines of Code
                 sh '''
-                    #!/bin/bash
-
                     echo "linting and testing..."
 
-                    mkdir Projects
-                    
-                    cd ~/Projects
-                    
-                    git clone https://github.com/stoic-llama/capstone-backend.git
-                    
-                    docker run --rm -v ~/Projects/capstone-backend:/project aldanial/cloc \
-                    --by-file \
-                    --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests \
-                    --include-lang=JavaScript \
-                    /project
+                    docker exec jenkins sh -c "
+                        git clone https://github.com/stoic-llama/capstone-backend.git ~/Projects
+                        
+                        docker run --rm -v ~/Projects/capstone-backend:/project aldanial/cloc \
+                        --by-file \
+                        --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests \
+                        --include-lang=JavaScript \
+                        /project
 
-                    rm -r ~/Projects/capstone-backend
+                        rm -r ~/Projects/capstone-backend
+                    "
+
                 '''
 
                 // Code Review - Code Complexity
