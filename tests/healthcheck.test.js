@@ -41,8 +41,8 @@ describe("/", () => {
         .get('/')
 
       console.log("res.text: " + res.text)        
-      expect(res.status).toEqual(200);
-      expect(res.text).toContain("API is alive!")
+      await expect(res.status).toEqual(200);
+      await expect(res.text).toContain("API is alive!")
     } 
     catch (error) {
       console.error("Error in 0th test: ", error);
@@ -66,10 +66,10 @@ describe("/api/v1/healthcheck", () => {
 
       console.log("res2 with /api/v/healthcheck: ", res2.text);
 
-      expect(res.status).toBe(200);
-      expect(res.headers["content-type"]).toMatch(/json/);
-      expect(res.body).toHaveProperty("name");
-      expect(res.body).toHaveProperty("message");
+      await expect(res.status).toBe(200);
+      await expect(res.headers["content-type"]).toMatch(/json/);
+      await expect(res.body).toHaveProperty("name");
+      await expect(res.body).toHaveProperty("message");
     } catch (error) {
       console.error("Error in 1st test: ", error);
     }
@@ -82,7 +82,7 @@ describe("/api/v1/healthcheck", () => {
 
     try {
       const res = await req.post("/api/v1/healthcheck");
-      expect(res.status).toBe(404);
+      await expect(res.status).toBe(404);
     } catch (error) {
       console.error("Error in 2nd test: ", error);
     }
