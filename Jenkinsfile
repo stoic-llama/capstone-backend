@@ -92,7 +92,7 @@ pipeline {
                             if ! command -v curl &> /dev/null
                             then
                                 echo "curl is not installed. Installing..."
-                                apk update && apk install -y curl
+                                apk update && apk add -y curl
                             else
                                 echo "curl is already installed."
                             fi
@@ -101,7 +101,7 @@ pipeline {
                             if ! command -v perl &> /dev/null
                             then
                                 echo "Perl is not installed. Installing..."
-                                apk update && apk install -y perl
+                                apk update && apk add -y perl
                             else
                                 echo "Perl is already installed."
                             fi
