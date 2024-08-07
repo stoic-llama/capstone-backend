@@ -87,17 +87,24 @@ pipeline {
                     echo "linting and testing..."
 
                     docker exec jenkins sh -c "
-                        git clone https://github.com/stoic-llama/capstone-backend.git ~/Projects
+                        git clone https://github.com/stoic-llama/capstone-backend.git ~/Projects/capstone/
                         
+                        ls ~/Projects/capstone/
+                    "
+                '''
+
+                sh '''
+                    docker exec jenkins sh -c "
                         docker run --rm -v ~/Projects/capstone-backend:/project aldanial/cloc \
                         --by-file \
                         --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests \
                         --include-lang=JavaScript \
                         /project
-
-                        rm -r ~/Projects/capstone-backend
                     "
+                '''
 
+                sh '''
+                    docker exec jenkins sh -c "rm -r ~/Projects/capstone-backend"
                 '''
 
                 // Code Review - Code Complexity
