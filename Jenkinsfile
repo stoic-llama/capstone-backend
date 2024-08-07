@@ -88,12 +88,12 @@ pipeline {
 
                     echo "checking if perl is installed..."
 
-                    perl -v
+                    docker exec jenkins sh -c "
+                        perl -v
 
-                    echo "initiating cloc from kent c dodds..."
+                        echo "initiating cloc from kent c dodds..."
 
-                    npx cloc . --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests --include-lang=JavaScript
-
+                        npx cloc . --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests --include-lang=JavaScript
                     "
                 '''
 
