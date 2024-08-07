@@ -88,9 +88,31 @@ pipeline {
 
                     echo "Checking if Perl is installed..."
 
-                    docker exec jenkins sh -c "
-                        perl -v
-
+                    docker exec capstone-backend sh -c "
+                        #!/bin/bash
+                        
+                        # Check if curl is installed
+                        if ! command -v curl &> /dev/null
+                        then
+                            echo "curl is not installed. Installing..."
+                            apk update && apk install -y curl
+                        else
+                            echo "curl is already installed."
+                        fi
+                        
+                        # Check if Perl is installed
+                        if ! command -v perl &> /dev/null
+                        then
+                            echo "Perl is not installed. Installing..."
+                            apk update && apk install -y perl
+                        else
+                            echo "Perl is already installed."
+                        fi
+                    "
+                '''
+ 
+                sh '''
+                    docker exec capstone-backend sh -c "
                         echo 'Initiating cloc from kent c dodds...'
 
                         npx cloc . --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests --include-lang=JavaScript
