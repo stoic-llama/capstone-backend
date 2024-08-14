@@ -7,7 +7,7 @@ FROM node:22-alpine
 
 ENV API_AUTH_URL="http://helpmybabies.com:5400/api/v1"
 ENV PORT="5000"
-
+ENV API_VERSION=1
 
 # create destination directory
 RUN mkdir -p /home/app
