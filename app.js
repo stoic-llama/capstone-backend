@@ -14,6 +14,8 @@ const router = require('./routes/route');
 const app = express()
 const apiVersion = '/api/v' + process.env.API_VERSION
 
+console.log("apiVersion: " + process.env.API_VERSION);
+
 ////////////////
 //   Routes   //
 ////////////////
