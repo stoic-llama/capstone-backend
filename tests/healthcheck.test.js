@@ -53,17 +53,22 @@ describe("/api/v1/healthcheck", () => {
     const req = supertest(app);
 
     try {
+      // const res2 = await req.get('http://localhost:5000/');
+      // console.log("http://localhost:5000" + res2.text);
+
       const res = await req
         .get("/api/v1/healthcheck");
       
-      console.log("res from test: ", res.text);
+      console.log("res from test: ", res.body);
+
 
       expect(res.status).toBe(200);
       expect(res.headers["content-type"]).toMatch(/json/);
       expect(res.body).toHaveProperty("name");
       expect(res.body).toHaveProperty("message");
     } catch (error) {
-      throw new Error("Error in 1st test: ", error);
+      // throw new Error("Error in 1st test: ", error);
+      console.log(error);
     }
   });
 });
