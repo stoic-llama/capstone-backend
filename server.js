@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 9999;
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
-    app.listen(PORT, console.log("Server started on port 5000"));
+    app.listen(PORT, console.log(`Server started on port ${PORT}`));
   })
   .catch((err) => {
     console.log(err);
