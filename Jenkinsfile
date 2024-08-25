@@ -157,7 +157,6 @@ pipeline {
                         # Print Response in Jenkins Console
                         echo "Test Result: $message" 
                     '''
-
                 }
             }
         }
