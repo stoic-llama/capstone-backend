@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Store_Item = require('../models/store_item.js')
 
 const storesSchema = new mongoose.Schema({
     "Company": {
@@ -46,7 +47,7 @@ const storesSchema = new mongoose.Schema({
         required: true,
     },
     "Store_items": {
-        type: Array, // array of Product_ratings objects
+        type: [Store_Item],
         required: true,
     },
 })
