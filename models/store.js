@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const Store_Item = require('../models/store_item.js')
 
 const storesSchema = new mongoose.Schema({
+    "_id": {
+        type: Object,
+        required: true,
+    },
     "Company": {
         type: String,
         required: true,
@@ -47,7 +51,7 @@ const storesSchema = new mongoose.Schema({
         required: true,
     },
     "Store_items": {
-        type: [Store_Item],
+        type: Array,
         required: true,
     },
 })
