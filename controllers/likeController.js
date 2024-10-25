@@ -3,50 +3,65 @@ const mongoose = require('mongoose')
 const store_item = require('../models/store_item')
 
 
-const upsDowns = async (req, res) => 
+const updateLikes = async (req, res) => 
 {
-    let _id = req.body._id
-    let product_id = req.body.product_id
-    let user_id = req.body.user_id
-    let like = req.body.like            //like=1, unlike=0
-    let dislike = req.body.dislike      //dislike=1, undislike=0
+    const { storeId, productId, email, like, dislike } = req.body; 
+    console.log('Received parameters:', { storeId, productId, email, like, dislike });
 
-    if(like = 1) {
-        console.log("I made it here")
-
-        let store 
+    if ( (like == 1) && (dislike == 0) )
+    {
         try {
-            console.log(req.body._id)
+            const store = await Store.findOneAndUpdate(
+                { 
+                    _id: new mongoose.Types.ObjectId(storeId), 
+                    "Store_items._id": new mongoose.Types.ObjectId(productId) 
+                },
+                {
+                    $addToSet: { "Store_items.$.Likes": email }, // Add email to Likes
+                    $inc: { "Store_items.$.Total_likes": 1} // Increment Total_likes
+                },
+                { new: true } // Return the updated document instead of the original before update
+            );
 
-            store = await Store.findById(new mongoose.Types.ObjectId(_id))
-            console.log(store)
-            if (store === null) {
-                return res.status(404).json({message: 'Cannot find store'})
+            if (!store) {
+                console.log('Store not found for:', { storeId, productId });
+                return res.status(404).json({ message: 'Store or product not found' });
             }
-            else {
 
-            console.log(product_id)
-
-            store.updateOne(
-                    {
-                        'Store_items.product_id':product_id,
-                    },
-                    {
-                        $push:{
-                            'Store_items.$.Likes':user_id
-                        }
-                    })
-
-                return res.status(200).json({ store:store })
-            }
-        } catch(err) {
-            return res.status(500).json({ message: err.message })
+            res.json(store);
+        } catch (err) {
+            console.error('Error in updateLikes:', err);
+            res.status(500).json({ message: err.message });
         }
-    
     }
-}
+    else if ( (like === 1) && (dislike ===1) ) {
+        try {
+            const store = await Store.findOneAndUpdate(
+                { 
+                    _id: new mongoose.Types.ObjectId(storeId), 
+                    "Store_items._id": new mongoose.Types.ObjectId(productId) 
+                },
+                {
+                    $pull: {"Store_items.$.Dislikes": email },   // Remove user's email previous Dislike interaction 
+                    $addToSet: { "Store_items.$.Likes": email }, // Add email to Likes
+                    $inc: { "Store_items.$.Total_likes": 1, "Store_items.$.Total_dislikes": -1 } // Increment Total_likes and decrement Total_dislikes
+                },
+                { new: true } // Return the updated document instead of the original before update
+            );
 
+            if (!store) {
+                console.log('Store not found for:', { storeId, productId });
+                return res.status(404).json({ message: 'Store or product not found' });
+            }
+
+            res.json(store);
+        } catch (err) {
+            console.error('Error in updateLikes:', err);
+            res.status(500).json({ message: err.message });
+        }
+    }
+};
 
 module.exports = {
-    upsDowns
+    updateLikes
 };
