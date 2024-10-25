@@ -60,6 +60,10 @@ const updateLikes = async (req, res) =>
             res.status(500).json({ message: err.message });
         }
     }
+    else {
+        console.error('Bad Request - Invalid Arguments:', err);
+            res.status(422).json({ message: err.message });
+    }
 };
 
 module.exports = {
