@@ -51,7 +51,7 @@ const storesSchema = new mongoose.Schema({
         required: true,
     },
     "Store_items": {
-        type: Array,
+        type:Array,
         required: true,
     },
 })
