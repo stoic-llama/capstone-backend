@@ -34,7 +34,7 @@ const updateLikes = async (req, res) =>
             res.status(500).json({ message: err.message });
         }
     }
-    else if ( (like === 1) && (dislike ===1) ) {
+    else if ( (like == 1) && (dislike == 1) ) {
         try {
             const store = await Store.findOneAndUpdate(
                 { 
@@ -61,8 +61,8 @@ const updateLikes = async (req, res) =>
         }
     }
     else {
-        console.error('Bad Request - Invalid Arguments:', err);
-            res.status(422).json({ message: err.message });
+        console.error('Bad Request - Invalid Arguments', err);
+            res.status(422).json({ message: 'Bad Request - Invalid Arguments' });
     }
 };
 
