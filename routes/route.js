@@ -7,8 +7,8 @@ const { updateDislikes } = require('../controllers/dislikeController.js')
 /** HTTP Reqeust */
 router.get('/healthcheck', healthcheck)
 router.get('/product/stores', storesWrapper)
-router.patch('/product/like', updateLikes)
-router.patch('/product/dislike', updateDislikes)
+router.post('/product/like', updateLikes)
+router.post('/product/dislike', updateDislikes)
 
 
 module.exports = router
