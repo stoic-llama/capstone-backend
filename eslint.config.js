@@ -8,7 +8,7 @@ module.exports = {
         ".vscode/**/*", 
         "Archive/**/*", 
         "node_modules/**/*", 
-        "tests/**/*"
+        //"tests/**/*"
     ],
     "rules": {
         "complexity": [ "warn", { "max": 0 } ]

@@ -119,7 +119,7 @@ pipeline {
                         docker exec capstone-backend sh -c "
                             echo 'Initiating cloc from kent c dodds...'
 
-                            npx cloc . --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage,tests --include-lang=JavaScript
+                            npx cloc . --by-file --exclude-dir=node_modules,.vscode,.VSCodeCounter,Archive,coverage --include-lang=JavaScript
                         "
                     '''
 
