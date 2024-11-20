@@ -21,17 +21,22 @@ const apiVersion = '/api/v' + process.env.API_VERSION
 
 // CORS configuration
 const corsOptions = {
-    origin: '*',
+    origin: 'http://helpmybabies.com',
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'authorization', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
     exposedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-    preflightContinue: false,
-    optionsSuccessStatus: 204
+    optionsSuccessStatus: 200
 };
 
-// Handle preflight requests
-app.options('*', cors(corsOptions));
+// Handle OPTIONS preflight for all routes
+app.use((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
+    }
+    next();
+});
 
 // Apply CORS middleware
 app.use(cors(corsOptions));
