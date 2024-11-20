@@ -21,9 +21,9 @@ const apiVersion = '/api/v' + process.env.API_VERSION
 // CORS configuration
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Credentials", true);
-    res.header("Access-Control-Allow-Origin", "*"); // Allow all origins for testing
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); // Include Authorization
-    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE"); // Specify allowed methods
+    res.header("Access-Control-Allow-Origin", "http://helpmybabies.com"); // Specify your frontend URL
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); // Ensure Authorization is included
+    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS"); // Specify allowed methods, including OPTIONS
     next();
 });
   
@@ -41,10 +41,11 @@ app.get("/", (req, res) => {
 
 app.use(apiVersion, router);
 
+// Handle preflight requests
 app.options('*', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+    res.header("Access-Control-Allow-Origin", "http://helpmybabies.com"); // Specify your frontend URL
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); // Ensure Authorization is included
+    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS"); // Specify allowed methods
     res.sendStatus(200); // Respond with 200 OK
 });
   
