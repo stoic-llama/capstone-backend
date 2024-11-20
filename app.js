@@ -21,12 +21,13 @@ const apiVersion = '/api/v' + process.env.API_VERSION
 
 // CORS configuration
 const corsOptions = {
-    origin: 'http://helpmybabies.com',
+    origin: true,
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-    optionsSuccessStatus: 200
+    optionsSuccessStatus: 200,
+    maxAge: 3600
 };
 
 // Enable pre-flight across-the-board
@@ -34,6 +35,16 @@ app.options('*', cors(corsOptions));
 
 // Apply CORS middleware
 app.use(cors(corsOptions));
+
+// Additional headers middleware
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin === 'http://helpmybabies.com') {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+});
   
 // setup app to process JSON
 app.use(express.json())
