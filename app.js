@@ -18,14 +18,14 @@ const apiVersion = '/api/v' + process.env.API_VERSION
 //   Routes   //
 ////////////////
 
-// Remove CORS between :3700 and :4100 difference
-// Refer https://stackoverflow.com/questions/46288437/set-cookies-for-cross-origin-requests
+// CORS configuration
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Credentials", true);
-    res.header("Access-Control-Allow-Origin", "*"); // process.env.CORS_FRONTEND_URL);
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Origin", "http://helpmybabies.com"); // Specify your frontend URL
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); // Include Authorization
+    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE"); // Specify allowed methods
     next();
-  });
+});
   
 // setup app to process JSON
 app.use(express.json())
@@ -33,7 +33,7 @@ app.use(express.json())
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
-  });
+});
 
 app.get("/", (req, res) => {
     res.send("API is alive!")
