@@ -10,6 +10,7 @@
 require('dotenv').config()
 
 const express = require("express");
+const cors = require('cors');
 const router = require('./routes/route'); 
 const app = express()
 const apiVersion = '/api/v' + process.env.API_VERSION
@@ -19,13 +20,17 @@ const apiVersion = '/api/v' + process.env.API_VERSION
 ////////////////
 
 // CORS configuration
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header("Access-Control-Allow-Origin", "http://helpmybabies.com"); // Specify your frontend URL
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); // Ensure Authorization is included
-    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS"); // Specify allowed methods, including OPTIONS
-    next();
-});
+const corsOptions = {
+    origin: 'http://helpmybabies.com',
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
   
 // setup app to process JSON
 app.use(express.json())
@@ -40,13 +45,5 @@ app.get("/", (req, res) => {
 })
 
 app.use(apiVersion, router);
-
-// Handle preflight requests
-app.options('*', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "http://helpmybabies.com"); // Specify your frontend URL
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); // Ensure Authorization is included
-    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS"); // Specify allowed methods
-    res.sendStatus(200); // Respond with 200 OK
-});
   
 module.exports = app
