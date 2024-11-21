@@ -11,6 +11,6 @@ module.exports = {
         "tests/**/*"
     ],
     "rules": {
-        "complexity": [ "warn", { "max": 0 } ]
+        "complexity": [ "warn", { "max": 15 } ]
     }, 
 };

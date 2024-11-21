@@ -1,6 +1,6 @@
 const Store = require('../models/store')
 const mongoose = require('mongoose')
-const store_item = require('../models/store_item')
+// const store_item = require('../models/store_item')
 
 
 const updateLikes = async (req, res) => 
@@ -28,7 +28,8 @@ const updateLikes = async (req, res) =>
                 return res.status(404).json({ message: 'Store or product not found' });
             }
 
-            res.json(store);
+            // res.json(store);
+            return res.status(200).json({ message: 'SUCCESS' });
         } catch (err) {
             console.error('Error in updateLikes:', err);
             res.status(500).json({ message: err.message });
@@ -48,15 +49,14 @@ const updateLikes = async (req, res) =>
                 },
                 //{ new: true } // Return the updated document instead of the original before update
             );
-            return res.status(200).json({ update_status: 'SUCCESS' });
-
-
+            
             if (!store) {
                 console.log('Store not found for:', { storeId: store_id, productId: product_id });
                 return res.status(404).json({ message: 'Store or product not found' });
             }
-
-            res.json(store);
+                
+            return res.status(200).json({ message: 'SUCCESS' });
+            // res.json(store);
         } catch (err) {
             console.error('Error in updateLikes:', err);
             res.status(500).json({ message: err.message });
